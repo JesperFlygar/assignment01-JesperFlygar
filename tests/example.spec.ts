@@ -8,7 +8,7 @@ test('test', async ({ page }) => {
   await page.locator('input[type="password"]').click();
   await page.locator('input[type="password"]').fill('GteteqbQQgSr88SwNExUQv2ydb7xuf8c');
   await page.getByRole('button', { name: 'Login' }).click();
-  await page.locator('div').filter({ hasText: /^RoomsNumber: 2View$/ }).getByRole('link').click();
+  await page.locator('div').filter({ hasText: /^RoomsNumber: 3View$/ }).getByRole('link').click();
   await page.getByRole('link', { name: 'Create Room' }).click();
   await page.getByRole('combobox').selectOption('single');
   await page.locator('div').filter({ hasText: /^Number$/ }).getByRole('spinbutton').click();
