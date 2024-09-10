@@ -1,6 +1,31 @@
 import { test, expect } from '@playwright/test';
+import { faker } from '@faker-js/faker';
 
-test('test', async ({ page }) => {
+// const randomName = faker.person.fullName();
+
+test.describe('Test suite 01', () => {
+  test('Test case 01', async ({ page }) => {
+    await page.goto(`${process.env.BASE_URL}`);
+    await expect(page.getByRole('link', { name: 'Tester Hotel' })).toBeVisible();
+    
+    await page.locator('input[type="text"]').fill(`${process.env.TEST_USERNAME}`);
+    await page.locator('input[type="password"]').fill(`${process.env.TEST_PASSWORD}`);
+    await page.getByRole('button', { name: 'Login' }).click();
+    await expect(page.getByRole('heading', { name: 'Tester Hotel Overview' })).toBeVisible();
+
+    await page.getByRole('button', { name: 'Logout' }).click();
+    await expect(page.getByRole('link', { name: 'Tester Hotel' })).toBeVisible();
+    await page.waitForTimeout(2000); 
+  });
+});
+
+
+
+
+
+
+
+/*test('test', async ({ page }) => {
   await page.goto('http://localhost:3000/'); 
   await page.goto('http://localhost:3000/login');
   await page.locator('input[type="text"]').click();
@@ -28,23 +53,4 @@ test('test', async ({ page }) => {
   await page.locator('div').filter({ hasText: /^ReservationsTotal: 1Current: 0View$/ }).getByRole('link').click();
   await page.getByRole('link', { name: 'Back' }).click();
   await page.getByRole('button', { name: 'Logout' }).click();
-});
-
-/*import { test, expect } from '@playwright/test';
-
-test('has title', async ({ page }) => {
-  await page.goto('https://playwright.dev/');
-
-  // Expect a title "to contain" a substring.
-  await expect(page).toHaveTitle(/Playwright/);
-});
-
-test('get started link', async ({ page }) => {
-  await page.goto('https://playwright.dev/');
-
-  // Click the get started link.
-  await page.getByRole('link', { name: 'Get started' }).click();
-
-  // Expects page to have a heading with the name of Installation.
-  await expect(page.getByRole('heading', { name: 'Installation' })).toBeVisible();
 });*/
