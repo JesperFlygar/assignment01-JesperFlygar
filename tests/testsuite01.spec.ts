@@ -2,21 +2,26 @@ import { test, expect } from '@playwright/test';
 import { LoginPage } from './pages/login-page';
 import { DashboardPage } from './pages/dashboard-page';
 import { ViewRoomPage } from './pages/views/viewrooms-page'
+import { ViewClientPage } from './pages/views/viewclients-page'
+
 import { CreateRoomPage } from './pages/create/createrooms.page'
-import { faker } from '@faker-js/faker';
+import { CreateClientPage } from './pages/create/createclients-page'
+
 
 // const randomName = faker.person.fullName();
 
+test.beforeEach(async ({ page }) => {
+  const loginPage = new LoginPage(page);
+  await loginPage.goto(); 
+  await loginPage.preformLogin(`${process.env.TEST_USERNAME}`, (`${process.env.TEST_PASSWORD}`))
+  await expect(page.getByRole('heading', { name: 'Tester Hotel Overview' })).toBeVisible();
+});
+
 test.describe('Test suite 01', () => {
   test('Test case 01', async ({ page }) => {
-    const loginPage = new LoginPage(page);
     const dashboardPage = new DashboardPage(page); 
     const viewRoomPage = new ViewRoomPage(page);
     const createRoomPage = new CreateRoomPage(page); 
-
-    await loginPage.goto(); 
-    await loginPage.preformLogin(`${process.env.TEST_USERNAME}`, (`${process.env.TEST_PASSWORD}`))
-    await expect(page.getByRole('heading', { name: 'Tester Hotel Overview' })).toBeVisible();
 
     await viewRoomPage.performClickViewRoom();
     await expect(page.getByRole('link', { name: 'Create Room' })).toBeVisible(); 
@@ -24,10 +29,43 @@ test.describe('Test suite 01', () => {
     await createRoomPage.performCreateRoom();
     await expect(page.getByText('New Room')).toBeVisible();
 
-    //create one for every view and create? do i fill in the fields with faker? or 
     
     dashboardPage.performLogout(); 
     await expect(page.getByRole('heading', { name: 'Login' })).toBeVisible(); 
     await page.waitForTimeout(5000);
   });
+
+  test('Test case 02', async ({ page }) => {
+    const dashboardPage = new DashboardPage(page); 
+    const viewClientPage = new ViewClientPage(page);
+    const createClientPage = new CreateClientPage(page); 
+
+    await viewClientPage.performClickViewClient();
+    await expect(page.getByRole('link', { name: 'Create Client' })).toBeVisible(); 
+
+    await createClientPage.performCreateClient();
+    await expect(page.getByText('New Client')).toBeVisible();
+
+    await createClientPage.fillClientInformation();
+    //await createClientPage.checkClientInformation(createClientPage.fillClientInformation()); 
+    
+    dashboardPage.performLogout(); 
+    await expect(page.getByRole('heading', { name: 'Login' })).toBeVisible(); 
+    await page.waitForTimeout(5000);
+    
+  });
 })
+
+test.describe('Test suite 02', () => {
+  test('Test case x', async ({ page }) => {
+    
+    
+  });
+})
+
+/*test.describe('Test suite 01', () => {
+  test('Test case 01', async ({ page }) => {
+    
+    
+  });
+})*/

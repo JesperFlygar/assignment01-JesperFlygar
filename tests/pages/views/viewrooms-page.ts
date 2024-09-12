@@ -4,7 +4,6 @@ export class ViewRoomPage {
  
   readonly page: Page;
   readonly viewButton: Locator; 
-  
 
   constructor(page: Page) {
     this.page = page;
