@@ -7,7 +7,7 @@ export class ViewRoomPage {
 
   constructor(page: Page) {
     this.page = page;
-    this.viewButton = page.locator('div').filter({ hasText: /^RoomsNumber: 4View$/ }).getByRole('link');
+    this.viewButton = page.locator('div').filter({ hasText: /^RoomsNumber: 2View$/ }).getByRole('link');
   }
 
    async performClickViewRoom() {

@@ -1,11 +1,16 @@
 import { test, expect } from '@playwright/test';
 import { LoginPage } from './pages/login-page';
 import { DashboardPage } from './pages/dashboard-page';
-import { ViewRoomPage } from './pages/views/viewrooms-page'
-import { ViewClientPage } from './pages/views/viewclients-page'
 
-import { CreateRoomPage } from './pages/create/createrooms.page'
-import { CreateClientPage } from './pages/create/createclients-page'
+import { ViewRoomPage } from './pages/views/viewrooms-page';
+import { ViewClientPage } from './pages/views/viewclients-page';
+//import { ViewBillPage } from './pages/views/viewbills-page';
+//import { ViewReservationPage } from './pages/views/viewreservations-page';
+
+import { CreateRoomPage } from './pages/create/createrooms.page';
+import { CreateClientPage } from './pages/create/createclients-page';
+//import { CreateBillPage } from './pages/create/createbills-page';
+//import { CreateReservationPage } from './pages/create/createreservations-page'; 
 
 
 // const randomName = faker.person.fullName();
@@ -29,6 +34,7 @@ test.describe('Test suite 01', () => {
     await createRoomPage.performCreateRoom();
     await expect(page.getByText('New Room')).toBeVisible();
 
+    await createRoomPage.fillRoomInformation(); 
     
     dashboardPage.performLogout(); 
     await expect(page.getByRole('heading', { name: 'Login' })).toBeVisible(); 
@@ -47,21 +53,38 @@ test.describe('Test suite 01', () => {
     await expect(page.getByText('New Client')).toBeVisible();
 
     await createClientPage.fillClientInformation();
-    //await createClientPage.checkClientInformation(createClientPage.fillClientInformation()); 
     
     dashboardPage.performLogout(); 
     await expect(page.getByRole('heading', { name: 'Login' })).toBeVisible(); 
     await page.waitForTimeout(5000);
-    
   });
+
+  /*test('Test case 03', async ({ page }) => {
+    const dashboardPage = new DashboardPage(page); 
+    const viewBillPage = new ViewBillPage(page);
+    const createClientPage = new CreateBillPage(page); 
+
+    await viewBillPage.performClickViewClient();
+    await expect(page.getByRole('link', { name: 'Create Client' })).toBeVisible(); 
+
+    await createBillPage.performCreateBill();
+    await expect(page.getByText('New Client')).toBeVisible();
+
+    await createClientPage.fillBillInformation();
+    
+    dashboardPage.performLogout(); 
+    await expect(page.getByRole('heading', { name: 'Login' })).toBeVisible(); 
+    await page.waitForTimeout(5000);
+  });*/
+
 })
 
-test.describe('Test suite 02', () => {
+/*test.describe('Test suite 02', () => {
   test('Test case x', async ({ page }) => {
     
     
   });
-})
+})*/
 
 /*test.describe('Test suite 01', () => {
   test('Test case 01', async ({ page }) => {
