@@ -5,8 +5,6 @@ export class DeleteRoomPage {
   readonly page: Page;
   readonly optionsButton: Locator; 
   readonly deleteButton: Locator;
-  
-
 
   constructor(page: Page) {
     this.page = page;
