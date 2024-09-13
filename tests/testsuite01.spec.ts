@@ -7,15 +7,11 @@ import { ViewClientPage } from './pages/views/viewclients-page';
 import { ViewBillPage } from './pages/views/viewbills-page';
 import { ViewReservationPage } from './pages/views/viewreservations-page';
 
-import { CreateRoomPage } from './pages/create/createrooms.page';
-import { CreateClientPage } from './pages/create/createclients-page';
-import { CreateBillPage } from './pages/create/createbills-page';
-import { CreateReservationPage } from './pages/create/createreservations-page'; 
+import { ViewPage } from './pages/view-page'; 
 
-import { DeleteRoomPage } from './pages/Delete/deleterooms-page'; 
-import { DeleteClientPage } from './pages/Delete/deleteclients-page';
-import { DeleteBillPage } from './pages/Delete/deletebills-page';
-import { DeleteReservationPage } from './pages/Delete/deletereservations-page';
+import { CreatePage } from './pages/create-page'; 
+
+import { DeletePage } from './pages/delete-page'; 
 
 import { EditClientPage } from './pages/Edit/editclients-page';
 import { EditBillPage } from './pages/Edit/editbills-page';
@@ -27,152 +23,111 @@ test.beforeEach(async ({ page }) => {
   await expect(page.getByRole('heading', { name: 'Tester Hotel Overview' })).toBeVisible();
 });
 
-/*test.afterEach(async ({ page }) => {
+test.afterEach(async ({ page }) => {
     const dashboardPage = new DashboardPage(page); 
     dashboardPage.performLogout(); 
     await expect(page.getByRole('heading', { name: 'Login' })).toBeVisible(); 
     await page.waitForTimeout(5000);
-})*/
+})
 
 test.describe('Create', () => {
   test('Create Room', async ({ page }) => {
-    const dashboardPage = new DashboardPage(page); 
-    const viewRoomPage = new ViewRoomPage(page);
-    const createRoomPage = new CreateRoomPage(page); 
+    const viewPage = new ViewPage(page, '/^RoomsNumber: 2View$/');
+    const createPage = new CreatePage(page, 'Create Room'); 
 
-    await viewRoomPage.performClickViewRoom();
+    await viewPage.performClickView();
     await expect(page.getByRole('link', { name: 'Create Room' })).toBeVisible(); 
 
-    await createRoomPage.performCreateRoom();
+    await createPage.performCreate();
     await expect(page.getByText('New Room')).toBeVisible();
 
-    await createRoomPage.fillRoomInformation(); 
-
-    dashboardPage.performLogout(); 
-    await expect(page.getByRole('heading', { name: 'Login' })).toBeVisible(); 
-    await page.waitForTimeout(5000);
+    await createPage.fillRoomInformation(); 
   });
 
-  test('Create Client', async ({ page }) => {
-    const dashboardPage = new DashboardPage(page); 
+  test('Create Client', async ({ page }) => { 
     const viewClientPage = new ViewClientPage(page);
-    const createClientPage = new CreateClientPage(page); 
+    const createPage = new CreatePage(page, 'Create Client'); 
 
     await viewClientPage.performClickViewClient();
     await expect(page.getByRole('link', { name: 'Create Client' })).toBeVisible(); 
 
-    await createClientPage.performCreateClient();
+    await createPage.performCreate();
     await expect(page.getByText('New Client')).toBeVisible();
 
-    await createClientPage.fillClientInformation();
-
-    dashboardPage.performLogout(); 
-    await expect(page.getByRole('heading', { name: 'Login' })).toBeVisible(); 
-    await page.waitForTimeout(5000);
+    await createPage.fillClientInformation();
   });
 
     test('Create Bill', async ({ page }) => {
-    const dashboardPage = new DashboardPage(page); 
     const viewBillPage = new ViewBillPage(page);
-    const createBillPage = new CreateBillPage(page); 
+    const createPage = new CreatePage(page, 'Create Bill'); 
 
     await viewBillPage.performClickViewBill();
     await expect(page.getByRole('link', { name: 'Create Bill' })).toBeVisible(); 
 
-    await createBillPage.performCreateBill();
+    await createPage.performCreate();
     await expect(page.getByText('New Bill')).toBeVisible();
 
-    await createBillPage.fillBillInformation();
-
-    dashboardPage.performLogout(); 
-    await expect(page.getByRole('heading', { name: 'Login' })).toBeVisible(); 
-    await page.waitForTimeout(5000);
+    await createPage.fillBillInformation();
   });
 
   test('Create Reservation', async ({ page }) => {
-    const dashboardPage = new DashboardPage(page); 
     const viewReservationPage = new ViewReservationPage(page);
-    const createReservationPage = new CreateReservationPage(page); 
+    const createPage = new CreatePage(page, 'Create Reservation'); 
 
     await viewReservationPage.performClickViewReservation();
     await expect(page.getByRole('link', { name: 'Create Reservation' })).toBeVisible(); 
 
-    await createReservationPage.performCreateReservation();
+    await createPage.performCreate();
     await expect(page.getByText('New Reservation')).toBeVisible();
 
-    await createReservationPage.fillReservationInformation();
-
-    dashboardPage.performLogout(); 
-    await expect(page.getByRole('heading', { name: 'Login' })).toBeVisible(); 
-    await page.waitForTimeout(5000);
+    await createPage.fillReservationInformation(); 
   });
 })
 
 test.describe('Delete', () => {
   test('Delete Room', async ({ page }) => {
-    const dashboardPage = new DashboardPage(page); 
     const viewRoomPage = new ViewRoomPage(page);
-    const deleteRoomPage = new DeleteRoomPage(page); 
+    const deleteRoomPage = new DeletePage(page, 1); 
 
     await viewRoomPage.performClickViewRoom();
     await expect(page.getByRole('link', { name: 'Create Room' })).toBeVisible(); 
 
-    await deleteRoomPage.performDeleteRoom(); 
-
-    dashboardPage.performLogout(); 
-    await expect(page.getByRole('heading', { name: 'Login' })).toBeVisible(); 
-    await page.waitForTimeout(5000);
+    await deleteRoomPage.performDelete(); 
   });
 
   test('Delete Client', async ({ page }) => {
-    const dashboardPage = new DashboardPage(page); 
     const viewClientPage = new ViewClientPage(page);
-    const deleteClientPage = new DeleteClientPage(page); 
+    const deleteClientPage = new DeletePage(page, 1); 
 
     await viewClientPage.performClickViewClient();
     await expect(page.getByRole('link', { name: 'Create Client' })).toBeVisible();
 
-    await deleteClientPage.performDeleteClient(); 
-
-    dashboardPage.performLogout(); 
-    await expect(page.getByRole('heading', { name: 'Login' })).toBeVisible(); 
-    await page.waitForTimeout(5000);
+    await deleteClientPage.performDelete(); 
   });
 
   test('Delete Bill', async ({ page }) => {
-    const dashboardPage = new DashboardPage(page); 
     const viewBillPage = new ViewBillPage(page);
-    const deleteBillPage = new DeleteBillPage(page); 
+    const deleteBillPage = new DeletePage(page, 0); 
 
     await viewBillPage.performClickViewBill();
      await expect(page.getByRole('link', { name: 'Create Bill' })).toBeVisible(); 
 
-    await deleteBillPage.performDeleteBill(); 
-
-    dashboardPage.performLogout(); 
-    await expect(page.getByRole('heading', { name: 'Login' })).toBeVisible(); 
-    await page.waitForTimeout(5000);
+    await deleteBillPage.performDelete(); 
   });
 
   test('Delete Reservation', async ({ page }) => {
-    const dashboardPage = new DashboardPage(page); 
     const viewReservationPage = new ViewReservationPage(page);
-    const deleteReservationPage = new DeleteReservationPage(page); 
+    const deleteReservationPage = new DeletePage(page, 0); 
 
     await viewReservationPage.performClickViewReservation();
     await expect(page.getByRole('link', { name: 'Create Reservation' })).toBeVisible(); 
 
-    await deleteReservationPage.performDeleteReservation(); 
-
-    dashboardPage.performLogout(); 
-    await expect(page.getByRole('heading', { name: 'Login' })).toBeVisible(); 
-    await page.waitForTimeout(5000);
+    await deleteReservationPage.performDelete(); 
   });
 })
 
 test.describe('Edit', () => {
   test('Edit Client', async ({ page }) => {
-    const dashboardPage = new DashboardPage(page); 
     const viewRoomPage = new ViewClientPage(page);
     const editClientPage = new EditClientPage(page); 
 
@@ -184,14 +139,9 @@ test.describe('Edit', () => {
     
     await editClientPage.preformEditClient(); 
     await expect(page.getByText('Clients')).toBeVisible(); 
-
-    dashboardPage.performLogout(); 
-    await expect(page.getByRole('heading', { name: 'Login' })).toBeVisible(); 
-    await page.waitForTimeout(5000);
   });
 
   test('Edit Bill', async ({ page }) => {
-    const dashboardPage = new DashboardPage(page); 
     const viewBillPage = new ViewBillPage(page);
     const editBillPage = new EditBillPage(page); 
 
@@ -203,9 +153,5 @@ test.describe('Edit', () => {
     
     await editBillPage.preformEditBill(); 
     await expect(page.getByText('Bills')).toBeVisible(); 
-
-    dashboardPage.performLogout(); 
-    await expect(page.getByRole('heading', { name: 'Login' })).toBeVisible(); 
-    await page.waitForTimeout(5000);
   });
 })
