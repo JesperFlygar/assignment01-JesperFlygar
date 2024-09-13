@@ -12,6 +12,14 @@ import { CreateClientPage } from './pages/create/createclients-page';
 import { CreateBillPage } from './pages/create/createbills-page';
 import { CreateReservationPage } from './pages/create/createreservations-page'; 
 
+import { DeleteRoomPage } from './pages/Delete/deleterooms-page';
+//import { DeleteClientPage } from './pages/Delete/deleteclients-page';
+//import { DeleteBillPage } from './pages/Delete/deletebills-page';
+//import { DeleteReservationPage } from './pages/Delete/deletereservations-page';
+
+//import { EditClientPage } from './pages/Edit/editclients-page';
+//import { EditBillPage } from './pages/Edit/editbills-page';
+
 test.beforeEach(async ({ page }) => {
   const loginPage = new LoginPage(page);
   await loginPage.goto(); 
@@ -19,8 +27,8 @@ test.beforeEach(async ({ page }) => {
   await expect(page.getByRole('heading', { name: 'Tester Hotel Overview' })).toBeVisible();
 });
 
-test.describe('Test suite 01', () => {
-  test('Test case 01', async ({ page }) => {
+test.describe('Create', () => {
+  test('Create Room', async ({ page }) => {
     const dashboardPage = new DashboardPage(page); 
     const viewRoomPage = new ViewRoomPage(page);
     const createRoomPage = new CreateRoomPage(page); 
@@ -38,7 +46,7 @@ test.describe('Test suite 01', () => {
     await page.waitForTimeout(5000);
   });
 
-  test('Test case 02', async ({ page }) => {
+  test('Create Client', async ({ page }) => {
     const dashboardPage = new DashboardPage(page); 
     const viewClientPage = new ViewClientPage(page);
     const createClientPage = new CreateClientPage(page); 
@@ -56,7 +64,7 @@ test.describe('Test suite 01', () => {
     await page.waitForTimeout(5000);
   });
 
-    test('Test case 03', async ({ page }) => {
+    test('Create Bill', async ({ page }) => {
     const dashboardPage = new DashboardPage(page); 
     const viewBillPage = new ViewBillPage(page);
     const createBillPage = new CreateBillPage(page); 
@@ -74,7 +82,7 @@ test.describe('Test suite 01', () => {
     await page.waitForTimeout(5000);
   });
 
-  test('Test case 04', async ({ page }) => {
+  test('Create Reservation', async ({ page }) => {
     const dashboardPage = new DashboardPage(page); 
     const viewReservationPage = new ViewReservationPage(page);
     const createReservationPage = new CreateReservationPage(page); 
@@ -91,19 +99,37 @@ test.describe('Test suite 01', () => {
     await expect(page.getByRole('heading', { name: 'Login' })).toBeVisible(); 
     await page.waitForTimeout(5000);
   });
-
 })
 
-/*test.describe('Test suite 02', () => {
-  test('Test case x', async ({ page }) => {
-    
-    
-  });
-})*/
+test.describe('Delete', () => {
+  test('Delete Room', async ({ page }) => {
+    const dashboardPage = new DashboardPage(page); 
+    const viewRoomPage = new ViewRoomPage(page);
+    const deleteRoomPage = new DeleteRoomPage(page); 
 
-/*test.describe('Test suite 01', () => {
-  test('Test case 01', async ({ page }) => {
-    
+    await viewRoomPage.performClickViewRoom();
+    await expect(page.getByRole('link', { name: 'Create Room' })).toBeVisible(); 
+  });
+
+  test('Delete Client', async ({ page }) => {
     
   });
-})*/
+
+  test('Delete Bill', async ({ page }) => {
+    
+  });
+
+  test('Delete Reservation', async ({ page }) => {
+    
+  });
+})
+
+test.describe('Edit', () => {
+  test('Edit Client', async ({ page }) => {
+    
+  });
+
+  test('Edit Bill', async ({ page }) => {
+    
+  });
+})
