@@ -5,7 +5,7 @@ export class ViewPage {
   readonly page: Page;
   readonly viewButton: Locator; 
 
-  constructor(page: Page, hasText: string) {
+  constructor(page: Page, hasText: RegExp) {
     this.page = page;
     this.viewButton = page.locator('div').filter({ hasText: hasText }).getByRole('link');
   }
