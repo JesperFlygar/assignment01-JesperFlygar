@@ -12,12 +12,12 @@ import { CreateClientPage } from './pages/create/createclients-page';
 import { CreateBillPage } from './pages/create/createbills-page';
 import { CreateReservationPage } from './pages/create/createreservations-page'; 
 
-import { DeleteRoomPage } from './pages/Delete/deleterooms-page';
+import { DeleteRoomPage } from './pages/Delete/deleterooms-page'; 
 //import { DeleteClientPage } from './pages/Delete/deleteclients-page';
 //import { DeleteBillPage } from './pages/Delete/deletebills-page';
 //import { DeleteReservationPage } from './pages/Delete/deletereservations-page';
 
-//import { EditClientPage } from './pages/Edit/editclients-page';
+import { EditClientPage } from './pages/Edit/editclients-page';
 //import { EditBillPage } from './pages/Edit/editbills-page';
 
 test.beforeEach(async ({ page }) => {
@@ -109,6 +109,8 @@ test.describe('Delete', () => {
 
     await viewRoomPage.performClickViewRoom();
     await expect(page.getByRole('link', { name: 'Create Room' })).toBeVisible(); 
+
+    await deleteRoomPage.performDeleteRoom(); 
   });
 
   test('Delete Client', async ({ page }) => {
@@ -126,7 +128,18 @@ test.describe('Delete', () => {
 
 test.describe('Edit', () => {
   test('Edit Client', async ({ page }) => {
+    const dashboardPage = new DashboardPage(page); 
+    const viewRoomPage = new ViewClientPage(page);
+    const editClientPage = new EditClientPage(page); 
+
+    await viewRoomPage.performClickViewClient();
+    await expect(page.getByRole('link', { name: 'Create Client' })).toBeVisible(); 
+
+    await editClientPage.enterEditClient(); 
+    await expect(page.getByText('Client:')).toBeVisible();
     
+    await editClientPage.preformEditClient(); 
+    await expect(page.getByText('Clients')).toBeVisible(); 
   });
 
   test('Edit Bill', async ({ page }) => {
