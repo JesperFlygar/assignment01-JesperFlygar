@@ -31,13 +31,4 @@ export class CreateClientPage {
     await expect(element).toContainText(userEmail);
     await expect(element).toContainText(userPhoneNo);
   }
-
-  /*async checkClientInformation(fillClientInformation){
-    const element = this.page.locator('#app > div > div.clients > div:nth-last-child(1)');
-    await expect(element).toContainText(fillClientInformation.fullName);
-    await expect(element).toContainText(fillClientInformation.userEmail);
-    await expect(element).toContainText(fillClientInformation.userPhoneNo);
-  }*/
 }
-
-//getByRole('link', { name: 'Back' })

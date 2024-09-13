@@ -9,7 +9,7 @@ export class CreateBillPage {
 
   constructor(page: Page) {
     this.page = page;
-    this.createButton = page.getByRole('link', { name: 'Create Client' }); 
+    this.createButton = page.getByRole('link', { name: 'Create Bill' }); 
   }
 
    async performCreateBill() {
@@ -17,18 +17,14 @@ export class CreateBillPage {
   }
 
   async fillBillInformation(){
-    const fullName = faker.person.fullName(); 
-    const userEmail = faker.internet.email();
-    const userPhoneNo = faker.phone.number();
+    const value = faker.helpers.rangeToNumber({min: 1, max: 999999999});
     
-    await this.page.locator('div').filter({ hasText: /^Name$/ }).getByRole('textbox').fill(fullName);
-    await this.page.locator('input[type="email"]').fill(userEmail);
-    await this.page.locator('div').filter({ hasText: /^Telephone$/ }).getByRole('textbox').fill(userPhoneNo);
+    await this.page.getByRole('spinbutton').fill(value.toString());
+    await this.page.locator('.checkbox').click(); 
     await this.page.getByText('Save').click();
 
     const element = this.page.locator('#app > div > div.bills > div:nth-last-child(1)');
-    await expect(element).toContainText(fullName);
-    await expect(element).toContainText(userEmail);
-    await expect(element).toContainText(userPhoneNo);
+    await expect(element).toContainText(value.toString());
+    await expect(element).toContainText('Yes'); 
   }
 }

@@ -4,12 +4,12 @@ import { DashboardPage } from './pages/dashboard-page';
 
 import { ViewRoomPage } from './pages/views/viewrooms-page';
 import { ViewClientPage } from './pages/views/viewclients-page';
-//import { ViewBillPage } from './pages/views/viewbills-page';
+import { ViewBillPage } from './pages/views/viewbills-page';
 //import { ViewReservationPage } from './pages/views/viewreservations-page';
 
 import { CreateRoomPage } from './pages/create/createrooms.page';
 import { CreateClientPage } from './pages/create/createclients-page';
-//import { CreateBillPage } from './pages/create/createbills-page';
+import { CreateBillPage } from './pages/create/createbills-page';
 //import { CreateReservationPage } from './pages/create/createreservations-page'; 
 
 
@@ -59,23 +59,23 @@ test.describe('Test suite 01', () => {
     await page.waitForTimeout(5000);
   });
 
-  /*test('Test case 03', async ({ page }) => {
+    test('Test case 03', async ({ page }) => {
     const dashboardPage = new DashboardPage(page); 
     const viewBillPage = new ViewBillPage(page);
-    const createClientPage = new CreateBillPage(page); 
+    const createBillPage = new CreateBillPage(page); 
 
-    await viewBillPage.performClickViewClient();
-    await expect(page.getByRole('link', { name: 'Create Client' })).toBeVisible(); 
+    await viewBillPage.performClickViewBill();
+    await expect(page.getByRole('link', { name: 'Create Bill' })).toBeVisible(); 
 
     await createBillPage.performCreateBill();
-    await expect(page.getByText('New Client')).toBeVisible();
+    await expect(page.getByText('New Bill')).toBeVisible();
 
-    await createClientPage.fillBillInformation();
+    await createBillPage.fillBillInformation();
     
     dashboardPage.performLogout(); 
     await expect(page.getByRole('heading', { name: 'Login' })).toBeVisible(); 
     await page.waitForTimeout(5000);
-  });*/
+  });
 
 })
 
