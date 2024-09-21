@@ -35,7 +35,7 @@ test.afterEach(async ({ page }) => {
 
 test.describe('Create', () => {
   test('Create Room', async ({ page }) => {
-    const viewPage = new ViewRoomPage(page); 
+    const viewPage = new ViewRoomPage(page);
     const createPage = new CreateRoomPage(page);
 
     await viewPage.performClickView();
@@ -95,7 +95,9 @@ test.describe('Delete', () => {
     await viewPage.performClickView();
     await expect(page.getByRole('link', { name: 'Create Room' })).toBeVisible();
 
+    expect(await deleteRoomPage.numberOfRooms).toBe(2);
     await deleteRoomPage.performDeleteRoom();
+    expect(await deleteRoomPage.numberOfRooms).toBe(1);
   });
 
   test('Delete Client', async ({ page }) => {
@@ -105,7 +107,9 @@ test.describe('Delete', () => {
     await viewPage.performClickView();
     await expect(page.getByRole('link', { name: 'Create Client' })).toBeVisible();
 
+    expect(await deleteClientPage.numberOfClients).toBe(2);
     await deleteClientPage.performDeleteClient();
+    expect(await deleteClientPage.numberOfClients).toBe(1);
   });
 
   test('Delete Bill', async ({ page }) => {
@@ -115,7 +119,9 @@ test.describe('Delete', () => {
     await viewPage.performClickView();
     await expect(page.getByRole('link', { name: 'Create Bill' })).toBeVisible();
 
+    expect(await deleteBillPage.numberOfBills).toBe(1);
     await deleteBillPage.performDeleteBill();
+    expect(await deleteBillPage.numberOfBills).toBe(0);
   });
 
   test('Delete Reservation', async ({ page }) => {
@@ -125,7 +131,9 @@ test.describe('Delete', () => {
     await viewPage.performClickView();
     await expect(page.getByRole('link', { name: 'Create Reservation' })).toBeVisible();
 
+    expect(await deleteReservationPage.numberOfReservations).toBe(1);
     await deleteReservationPage.performDeleteReservation();
+    expect(await deleteReservationPage.numberOfReservations).toBe(0);
   });
 })
 

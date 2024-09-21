@@ -13,11 +13,13 @@ export class DeleteRoomPage {
     this.deleteButton = page.getByText('Delete');
   }
 
+  get numberOfRooms(): Promise<Number> {
+    return this.page.getByRole('img').count(); 
+  }
+
   async performDeleteRoom() {
-    expect(await this.page.getByRole('img').count()).toBe(2);
     await this.optionsButton.click();
     expect(await this.deleteButton.evaluate(node => node.isConnected)).toBe(true);
     await this.deleteButton.click();
-    expect(await this.page.getByRole('img').count()).toBe(1);
   }
 }

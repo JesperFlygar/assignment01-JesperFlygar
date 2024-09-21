@@ -13,6 +13,10 @@ export class DeleteClientPage {
     this.deleteButton = page.getByText('Delete');
   }
 
+  get numberOfClients(): Promise<Number> {
+    return this.page.getByRole('img').count(); 
+  }
+
   async performDeleteClient() {
     expect(await this.page.getByRole('img').count()).toBe(2);
     await this.optionsButton.click();

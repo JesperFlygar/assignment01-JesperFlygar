@@ -13,6 +13,10 @@ export class DeleteBillPage {
     this.deleteButton = page.getByText('Delete');
   }
 
+  get numberOfBills(): Promise<Number> {
+    return this.page.getByRole('img').count(); 
+  }
+
   async performDeleteBill() {
     expect(await this.page.getByRole('img').count()).toBe(1);
     await this.optionsButton.click();

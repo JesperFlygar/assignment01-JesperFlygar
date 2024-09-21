@@ -13,6 +13,10 @@ export class DeleteReservationPage {
     this.deleteButton = page.getByText('Delete');
   }
 
+  get numberOfReservations(): Promise<Number> {
+    return this.page.getByRole('img').count(); 
+  }
+
   async performDeleteReservation() {
     expect(await this.page.getByRole('img').count()).toBe(1);
     await this.optionsButton.click();
