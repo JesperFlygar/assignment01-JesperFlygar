@@ -1,10 +1,21 @@
 import { test, expect } from '@playwright/test';
-import { LoginPage } from './pages/login-page';
-import { DashboardPage } from './pages/dashboard-page';
-import { ViewPage } from './pages/view-page';
-import { CreatePage } from './pages/create-page';
-import { DeletePage } from './pages/delete-page';
-import { EditPage } from './pages/edit-page';
+import { LoginPage } from './pages/folder/login-page';
+import { DashboardPage } from './pages/folder/dashboard-page';
+
+import { ViewRoomPage } from './view_room_page';
+import { ViewClientPage } from './view_client_page';
+import { ViewBillPage } from './view_bill_page';
+import { ViewReservationPage } from './view_reservation_page';
+
+import { CreateRoomPage } from './create_room_page';
+import { CreateClientPage } from './create_client_page';
+import { CreateBillPage } from './create_bill_page';
+import { CreateReservationPage } from './create_reservation_page';
+
+import { EditClientPage } from './edit_client_page';
+import { EditBillPage } from './edit_bill_page';
+
+import { DeletePage } from './pages/folder/delete-page';
 
 test.beforeEach(async ({ page }) => {
   const loginPage = new LoginPage(page);
@@ -17,13 +28,12 @@ test.afterEach(async ({ page }) => {
   const dashboardPage = new DashboardPage(page);
   dashboardPage.performLogout();
   await expect(page.getByRole('heading', { name: 'Login' })).toBeVisible();
-  await page.waitForTimeout(5000);
 })
 
 test.describe('Create', () => {
   test('Create Room', async ({ page }) => {
-    const viewPage = new ViewPage(page, /^RoomsNumber: 2View$/);
-    const createPage = new CreatePage(page, 'Create Room');
+    const viewPage = new ViewRoomPage(page); 
+    const createPage = new CreateRoomPage(page);
 
     await viewPage.performClickView();
     await expect(page.getByRole('link', { name: 'Create Room' })).toBeVisible();
@@ -31,12 +41,12 @@ test.describe('Create', () => {
     await createPage.performCreate();
     await expect(page.getByText('New Room')).toBeVisible();
 
-    await createPage.fillRoomInformation();
+    await createPage.createRoom();
   });
 
   test('Create Client', async ({ page }) => {
-    const viewPage = new ViewPage(page, /^ClientsNumber: 2View$/);
-    const createPage = new CreatePage(page, 'Create Client');
+    const viewPage = new ViewClientPage(page);
+    const createPage = new CreateClientPage(page);
 
     await viewPage.performClickView();
     await expect(page.getByRole('link', { name: 'Create Client' })).toBeVisible();
@@ -44,12 +54,12 @@ test.describe('Create', () => {
     await createPage.performCreate();
     await expect(page.getByText('New Client')).toBeVisible();
 
-    await createPage.fillClientInformation();
+    await createPage.createClient();
   });
 
   test('Create Bill', async ({ page }) => {
-    const viewPage = new ViewPage(page, /^BillsTotal: 1 \(4500kr\)Paid: 0 \(0kr\)View$/);
-    const createPage = new CreatePage(page, 'Create Bill');
+    const viewPage = new ViewBillPage(page);
+    const createPage = new CreateBillPage(page);
 
     await viewPage.performClickView();
     await expect(page.getByRole('link', { name: 'Create Bill' })).toBeVisible();
@@ -57,12 +67,12 @@ test.describe('Create', () => {
     await createPage.performCreate();
     await expect(page.getByText('New Bill')).toBeVisible();
 
-    await createPage.fillBillInformation();
+    await createPage.createBill();
   });
 
   test('Create Reservation', async ({ page }) => {
-    const viewPage = new ViewPage(page, /^ReservationsTotal: 1Current: 0View$/);
-    const createPage = new CreatePage(page, 'Create Reservation');
+    const viewPage = new ViewReservationPage(page);
+    const createPage = new CreateReservationPage(page);
 
     await viewPage.performClickView();
     await expect(page.getByRole('link', { name: 'Create Reservation' })).toBeVisible();
@@ -70,13 +80,13 @@ test.describe('Create', () => {
     await createPage.performCreate();
     await expect(page.getByText('New Reservation')).toBeVisible();
 
-    await createPage.fillReservationInformation();
+    await createPage.createReservation();
   });
 })
 
 test.describe('Delete', () => {
   test('Delete Room', async ({ page }) => {
-    const viewPage = new ViewPage(page, /^RoomsNumber: 2View$/);
+    const viewPage = new ViewRoomPage(page);
     const deleteRoomPage = new DeletePage(page, 1);
 
     await viewPage.performClickView();
@@ -86,7 +96,7 @@ test.describe('Delete', () => {
   });
 
   test('Delete Client', async ({ page }) => {
-    const viewPage = new ViewPage(page, /^ClientsNumber: 2View$/);
+    const viewPage = new ViewClientPage(page);
     const deleteClientPage = new DeletePage(page, 1);
 
     await viewPage.performClickView();
@@ -96,7 +106,7 @@ test.describe('Delete', () => {
   });
 
   test('Delete Bill', async ({ page }) => {
-    const viewPage = new ViewPage(page, /^BillsTotal: 1 \(4500kr\)Paid: 0 \(0kr\)View$/);
+    const viewPage = new ViewBillPage(page);
     const deleteBillPage = new DeletePage(page, 0);
 
     await viewPage.performClickView();
@@ -106,7 +116,7 @@ test.describe('Delete', () => {
   });
 
   test('Delete Reservation', async ({ page }) => {
-    const viewPage = new ViewPage(page, /^ReservationsTotal: 1Current: 0View$/);
+    const viewPage = new ViewReservationPage(page);
     const deleteReservationPage = new DeletePage(page, 0);
 
     await viewPage.performClickView();
@@ -118,8 +128,8 @@ test.describe('Delete', () => {
 
 test.describe('Edit', () => {
   test('Edit Client', async ({ page }) => {
-    const viewPage = new ViewPage(page, /^ClientsNumber: 2View$/);
-    const editPage = new EditPage(page, 2);
+    const viewPage = new ViewClientPage(page);
+    const editPage = new EditClientPage(page);
 
     await viewPage.performClickView();
     await expect(page.getByRole('link', { name: 'Create Client' })).toBeVisible();
@@ -132,8 +142,8 @@ test.describe('Edit', () => {
   });
 
   test('Edit Bill', async ({ page }) => {
-    const viewPage = new ViewPage(page, /^BillsTotal: 1 \(4500kr\)Paid: 0 \(0kr\)View$/);
-    const editPage = new EditPage(page, 1);
+    const viewPage = new ViewBillPage(page);
+    const editPage = new EditBillPage(page);
 
     await viewPage.performClickView();
     await expect(page.getByRole('link', { name: 'Create Bill' })).toBeVisible();
