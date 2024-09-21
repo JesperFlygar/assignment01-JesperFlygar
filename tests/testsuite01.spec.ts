@@ -15,7 +15,10 @@ import { CreateReservationPage } from './create_reservation_page';
 import { EditClientPage } from './edit_client_page';
 import { EditBillPage } from './edit_bill_page';
 
-import { DeletePage } from './pages/folder/delete-page';
+import { DeleteRoomPage } from './delete_room_page';
+import { DeleteClientPage } from './delete_client_page';
+import { DeleteBillPage } from './delete_bill_page';
+import { DeleteReservationPage } from './delete_reservation_page';
 
 test.beforeEach(async ({ page }) => {
   const loginPage = new LoginPage(page);
@@ -87,42 +90,42 @@ test.describe('Create', () => {
 test.describe('Delete', () => {
   test('Delete Room', async ({ page }) => {
     const viewPage = new ViewRoomPage(page);
-    const deleteRoomPage = new DeletePage(page, 1);
+    const deleteRoomPage = new DeleteRoomPage(page);
 
     await viewPage.performClickView();
     await expect(page.getByRole('link', { name: 'Create Room' })).toBeVisible();
 
-    await deleteRoomPage.performDelete();
+    await deleteRoomPage.performDeleteRoom();
   });
 
   test('Delete Client', async ({ page }) => {
     const viewPage = new ViewClientPage(page);
-    const deleteClientPage = new DeletePage(page, 1);
+    const deleteClientPage = new DeleteClientPage(page);
 
     await viewPage.performClickView();
     await expect(page.getByRole('link', { name: 'Create Client' })).toBeVisible();
 
-    await deleteClientPage.performDelete();
+    await deleteClientPage.performDeleteClient();
   });
 
   test('Delete Bill', async ({ page }) => {
     const viewPage = new ViewBillPage(page);
-    const deleteBillPage = new DeletePage(page, 0);
+    const deleteBillPage = new DeleteBillPage(page);
 
     await viewPage.performClickView();
     await expect(page.getByRole('link', { name: 'Create Bill' })).toBeVisible();
 
-    await deleteBillPage.performDelete();
+    await deleteBillPage.performDeleteBill();
   });
 
   test('Delete Reservation', async ({ page }) => {
     const viewPage = new ViewReservationPage(page);
-    const deleteReservationPage = new DeletePage(page, 0);
+    const deleteReservationPage = new DeleteReservationPage(page);
 
     await viewPage.performClickView();
     await expect(page.getByRole('link', { name: 'Create Reservation' })).toBeVisible();
 
-    await deleteReservationPage.performDelete();
+    await deleteReservationPage.performDeleteReservation();
   });
 })
 
