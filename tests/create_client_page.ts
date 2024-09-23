@@ -2,27 +2,26 @@ import { expect, type Locator, type Page } from '@playwright/test';
 
 export class CreateClientPage 
 {
+    readonly page: Page;
+    readonly createButton: Locator;
 
-  readonly page: Page;
-  readonly createButton: Locator;
 
+    constructor(page: Page) 
+    {
+        this.page = page;
+        this.createButton = page.getByRole('link', { name: 'Create Client' });
+    }
 
-  constructor(page: Page) 
-  {
-    this.page = page;
-    this.createButton = page.getByRole('link', { name: 'Create Client' });
-  }
+    async performCreate() 
+    {
+        await this.createButton.click();
+    }
 
-  async performCreate() 
-  {
-    await this.createButton.click();
-  }
-
-  async createClient(fullName: string, userEmail: string, userPhoneNo: string) 
-  {
-    await this.page.locator('div').filter({ hasText: /^Name$/ }).getByRole('textbox').fill(fullName);
-    await this.page.locator('input[type="email"]').fill(userEmail);
-    await this.page.locator('div').filter({ hasText: /^Telephone$/ }).getByRole('textbox').fill(userPhoneNo);
-    await this.page.getByText('Save').click();
-  }
+    async createClient(fullName: string, userEmail: string, userPhoneNo: string) 
+    {
+        await this.page.locator('div').filter({ hasText: /^Name$/ }).getByRole('textbox').fill(fullName);
+        await this.page.locator('input[type="email"]').fill(userEmail);
+        await this.page.locator('div').filter({ hasText: /^Telephone$/ }).getByRole('textbox').fill(userPhoneNo);
+        await this.page.getByText('Save').click();
+    }
 }

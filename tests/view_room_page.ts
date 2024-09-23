@@ -2,7 +2,6 @@ import { expect, type Locator, type Page } from '@playwright/test';
 
 export class ViewRoomPage 
 {
-
     readonly page: Page;
     readonly viewButton: Locator;
 

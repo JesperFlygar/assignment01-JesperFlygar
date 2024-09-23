@@ -2,7 +2,6 @@ import { expect, type Locator, type Page } from '@playwright/test';
 
 export class EditClientPage 
 {
-
     readonly page: Page;
     readonly expectedInstances: Number;
     readonly optionsButton: Locator;

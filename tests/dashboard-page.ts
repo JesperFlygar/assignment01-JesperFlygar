@@ -2,7 +2,6 @@ import { expect, type Locator, type Page } from '@playwright/test';
 
 export class DashboardPage 
 {
-
     readonly page: Page;
     readonly logoutButton: Locator;
 
