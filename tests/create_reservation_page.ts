@@ -21,9 +21,9 @@ export class CreateReservationPage
     {
         await this.page.locator('div').filter({ hasText: /^Start \(Format YYYY-MM-DD\)$/ }).getByPlaceholder('YYYY-MM-DD').fill(startDate.toLocaleDateString());
         await this.page.locator('div').filter({ hasText: /^End \(Format YYYY-MM-DD\)$/ }).getByPlaceholder('YYYY-MM-DD').fill(endDate.toLocaleDateString());
-        await this.page.locator('div').filter({ hasText: /^Client- Not selected -Jonas Hellman \(#1\)Mikael Eriksson \(#2\)$/ }).getByRole('combobox').selectOption('Jonas Hellman \(#1\)');
-        await this.page.locator('div').filter({ hasText: /^Room- Not selected -Floor 1, Room 101Floor 1, Room 102$/ }).getByRole('combobox').selectOption('Floor 1, Room 102');
-        await this.page.locator('div').filter({ hasText: /^Bill- Not selected -ID: 1$/ }).getByRole('combobox').selectOption('ID: 1');
+        await this.page.locator('#app > div > div:nth-child(2) > div:nth-child(3) > select').selectOption({index: 1});
+        await this.page.locator('#app > div > div:nth-child(2) > div:nth-child(4) > select').selectOption({index: 2});
+        await this.page.locator('#app > div > div:nth-child(2) > div:nth-child(5) > select').selectOption({index: 1});
         await this.page.getByText('Save').click();
     }
 }
