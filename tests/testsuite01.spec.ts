@@ -1,5 +1,6 @@
 import { test, expect } from '@playwright/test';
 import { faker } from '@faker-js/faker';
+
 import { LoginPage } from './login-page';
 import { DashboardPage } from './dashboard-page';
 
