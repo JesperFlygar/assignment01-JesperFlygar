@@ -54,9 +54,8 @@ test.describe('Create', () =>
     const floor = faker.helpers.rangeToNumber({ min: 1, max: 50 });
     const price = faker.helpers.rangeToNumber({ min: 10000, max: 100000 });
 
-    await createPage.createRoom(number, floor, price);
+    const element = await createPage.createRoom(number, floor, price);
 
-    const element = page.locator('#app > div > div.rooms > div:nth-last-child(1)');
     await expect(element).toContainText(number.toString());
     await expect(element).toContainText(floor.toString());
     await expect(element).toContainText(price.toString());
@@ -77,9 +76,8 @@ test.describe('Create', () =>
     const userEmail = faker.internet.email();
     const userPhoneNo = faker.phone.number();
 
-    await createPage.createClient(fullName, userEmail, userPhoneNo);
+    const element = await createPage.createClient(fullName, userEmail, userPhoneNo);
 
-    const element = page.locator('#app > div > div.clients > div:nth-last-child(1)');
     await expect(element).toContainText(fullName);
     await expect(element).toContainText(userEmail);
     await expect(element).toContainText(userPhoneNo);
@@ -98,9 +96,8 @@ test.describe('Create', () =>
 
     const value = faker.helpers.rangeToNumber({ min: 1, max: 999999999 });
 
-    await createPage.createBill(value);
+    const element = await createPage.createBill(value);
 
-    const element = page.locator('#app > div > div.bills > div:nth-last-child(1)');
     await expect(element).toContainText(value.toString());
     await expect(element).toContainText('Yes');
   });
@@ -119,9 +116,8 @@ test.describe('Create', () =>
     const startDate = faker.date.recent();
     const endDate = faker.date.soon();
 
-    await createPage.createReservation(startDate, endDate);
-
-    const element = page.locator('#app > div > div.reservations > div:nth-last-child(1)');
+    const element = await createPage.createReservation(startDate, endDate);
+    
     await expect(element).toContainText(startDate.toLocaleDateString());
     await expect(element).toContainText(endDate.toLocaleDateString());
     await expect(element).toContainText('1');

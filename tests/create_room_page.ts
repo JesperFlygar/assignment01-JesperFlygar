@@ -17,7 +17,7 @@ export class CreateRoomPage
         await this.createButton.click();
     }
 
-    async createRoom(number: Number, floor: Number, price: Number) 
+    async createRoom(number: Number, floor: Number, price: Number)
     {
         await this.page.getByRole('combobox').selectOption('Single');
         await this.page.locator('div').filter({ hasText: /^Number$/ }).getByRole('spinbutton').fill(number.toString());
@@ -26,5 +26,6 @@ export class CreateRoomPage
         await this.page.locator('div').filter({ hasText: /^Price$/ }).getByRole('spinbutton').fill(price.toString());
         await this.page.getByRole('listbox').selectOption('Balcony');
         await this.page.getByText('Save').click();
+        return this.page.locator('#app > div > div.rooms > div:nth-last-child(1)');
     }
 }

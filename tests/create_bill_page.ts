@@ -22,5 +22,6 @@ export class CreateBillPage
         await this.page.getByRole('spinbutton').fill(value.toString());
         await this.page.locator('.checkbox').click();
         await this.page.getByText('Save').click();
+        return this.page.locator('#app > div > div.bills > div:nth-last-child(1)');
     }
 }

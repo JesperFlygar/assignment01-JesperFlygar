@@ -25,5 +25,6 @@ export class CreateReservationPage
         await this.page.locator('#app > div > div:nth-child(2) > div:nth-child(4) > select').selectOption({index: 2});
         await this.page.locator('#app > div > div:nth-child(2) > div:nth-child(5) > select').selectOption({index: 1});
         await this.page.getByText('Save').click();
+        return this.page.locator('#app > div > div.reservations > div:nth-last-child(1)');
     }
 }
