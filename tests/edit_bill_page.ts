@@ -3,27 +3,20 @@ import { expect, type Locator, type Page } from '@playwright/test';
 export class EditBillPage 
 {
     readonly page: Page;
-    readonly expectedInstances: Number;
-    readonly optionsButton: Locator;
-    readonly editButton: Locator;
 
     constructor(page: Page) 
     {
         this.page = page;
-        this.optionsButton = page.getByRole('img').first();
-        this.editButton = page.getByText('Edit');
     }
 
-    async enterEdit() 
+    async preformEditBill(optionToEdit: Number, value: Number) 
     {
-        expect(await this.page.getByRole('img').count()).toBe(1);
-        await this.optionsButton.click();
-        expect(await this.editButton.evaluate(node => node.isConnected)).toBe(true);
-        await this.editButton.click();
-    }
+        let optionsButton: Locator = this.page.locator('#app > div > div.bills > div:nth-child('+ optionToEdit +') > div.action > img')
+        await optionsButton.click();
+        let editButton: Locator = this.page.getByText('Edit');
+        await editButton.evaluate(node => node.isConnected);
+        await editButton.click();
 
-    async preformEditBill(value: Number) 
-    {
         await this.page.getByRole('spinbutton').fill(value.toString());
         await this.page.locator('.checkbox').click();
         await this.page.getByText('Save').click();

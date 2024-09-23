@@ -3,15 +3,10 @@ import { expect, type Locator, type Page } from '@playwright/test';
 export class DeleteReservationPage 
 {
     readonly page: Page;
-    readonly expectedInstances: Number;
-    readonly optionsButton: Locator;
-    readonly deleteButton: Locator;
 
-    constructor(page: Page, optionToDelete: Number) 
+    constructor(page: Page) 
     {
         this.page = page;
-        this.optionsButton = page.locator('#app > div > div.rooms > div:nth-child('+ optionToDelete +') > div.action > img');
-        this.deleteButton = page.getByText('Delete');
     }
 
     get numberOfReservations(): Promise<Number> 
@@ -19,13 +14,12 @@ export class DeleteReservationPage
         return this.page.getByRole('img').count();
     }
 
-    async clickOptions() 
+    async performDeleteReservation(optionToDelete: Number) 
     {
-        await this.optionsButton.click();
-    }
-
-    async performDeleteReservation() 
-    {
-        await this.deleteButton.click();
+        let optionsButton: Locator = this.page.locator('#app > div > div.reservations > div:nth-child('+ optionToDelete +') > div.action > img');
+        await optionsButton.click();
+        await this.page.locator('#app > div > div.reservations > div:nth-child('+ optionToDelete +') > div.action > img').evaluate(node => node.isConnected);  
+        let deleteButton: Locator = this.page.getByText('Delete');
+        await deleteButton.click();
     }
 }

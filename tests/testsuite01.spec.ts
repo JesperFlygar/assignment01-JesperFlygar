@@ -134,65 +134,53 @@ test.describe('Delete', () =>
 {
   test('Delete Room', async ({ page }) => 
   {
-    const deleteOption = 1; 
     const viewPage = new ViewRoomPage(page);
-    const deleteRoomPage = new DeleteRoomPage(page, deleteOption);
+    const deleteRoomPage = new DeleteRoomPage(page);
 
     await viewPage.performClickView();
     await expect(page.getByRole('link', { name: 'Create Room' })).toBeVisible();
 
     expect(await deleteRoomPage.numberOfRooms).toBe(2);
-    await deleteRoomPage.clickOptions(); 
-    expect(await page.locator('#app > div > div.rooms > div:nth-child('+ deleteOption +') > div.action > img').evaluate(node => node.isConnected)).toBe(true); 
-    await deleteRoomPage.performDeleteRoom(); //do the editOption for edit
+    await deleteRoomPage.performDeleteRoom(1); 
     expect(await deleteRoomPage.numberOfRooms).toBe(1);
   });
 
   test('Delete Client', async ({ page }) => 
   {
-    const deleteOption = 1; 
     const viewPage = new ViewClientPage(page);
-    const deleteClientPage = new DeleteClientPage(page, deleteOption);
+    const deleteClientPage = new DeleteClientPage(page);
 
     await viewPage.performClickView();
     await expect(page.getByRole('link', { name: 'Create Client' })).toBeVisible();
 
-    expect(await deleteClientPage.numberOfClients).toBe(2);
-    await deleteClientPage.clickOptions(); 
-    expect(await page.locator('#app > div > div.rooms > div:nth-child('+ deleteOption +') > div.action > img').evaluate(node => node.isConnected)).toBe(true); 
-    await deleteClientPage.performDeleteClient();
+    expect(await deleteClientPage.numberOfClients).toBe(2); 
+    await deleteClientPage.performDeleteClient(1);
     expect(await deleteClientPage.numberOfClients).toBe(1);
   });
 
   test('Delete Bill', async ({ page }) => 
   {
-    const deleteOption = 1; 
     const viewPage = new ViewBillPage(page);
-    const deleteBillPage = new DeleteBillPage(page, deleteOption);
+    const deleteBillPage = new DeleteBillPage(page);
 
     await viewPage.performClickView();
     await expect(page.getByRole('link', { name: 'Create Bill' })).toBeVisible();
 
-    expect(await deleteBillPage.numberOfBills).toBe(1);
-    await deleteBillPage.clickOptions(); 
-    expect(await page.locator('#app > div > div.rooms > div:nth-child('+ deleteOption +') > div.action > img').evaluate(node => node.isConnected)).toBe(true); 
-    await deleteBillPage.performDeleteBill();
+    expect(await deleteBillPage.numberOfBills).toBe(1); 
+    await deleteBillPage.performDeleteBill(1);
     expect(await deleteBillPage.numberOfBills).toBe(0);
   });
 
   test('Delete Reservation', async ({ page }) => 
   {
-    const deleteOption = 1; 
     const viewPage = new ViewReservationPage(page);
-    const deleteReservationPage = new DeleteReservationPage(page, deleteOption);
+    const deleteReservationPage = new DeleteReservationPage(page);
 
     await viewPage.performClickView();
     await expect(page.getByRole('link', { name: 'Create Reservation' })).toBeVisible();
 
     expect(await deleteReservationPage.numberOfReservations).toBe(1);
-    await deleteReservationPage.clickOptions(); 
-    expect(await page.locator('#app > div > div.rooms > div:nth-child('+ deleteOption +') > div.action > img').evaluate(node => node.isConnected)).toBe(true); 
-    await deleteReservationPage.performDeleteReservation();
+    await deleteReservationPage.performDeleteReservation(1);
     expect(await deleteReservationPage.numberOfReservations).toBe(0);
   });
 })
@@ -206,14 +194,13 @@ test.describe('Edit', () => {
     await viewPage.performClickView();
     await expect(page.getByRole('link', { name: 'Create Client' })).toBeVisible();
 
-    await editPage.enterEdit();
-    await expect(page.getByText('Client:')).toBeVisible();
+    expect(await page.getByRole('img').count()).toBe(2);
 
     const fullName = faker.person.fullName();
     const userEmail = faker.internet.email();
     const userPhoneNo = faker.phone.number();
 
-    await editPage.preformEditClient(fullName, userEmail, userPhoneNo);
+    await editPage.preformEditClient(1, fullName, userEmail, userPhoneNo);
     await expect(page.getByText('Clients')).toBeVisible();
 
     const element = page.locator('#app > div > div.clients > div:nth-child(1)');
@@ -230,12 +217,11 @@ test.describe('Edit', () => {
     await viewPage.performClickView();
     await expect(page.getByRole('link', { name: 'Create Bill' })).toBeVisible();
 
-    await editPage.enterEdit();
-    await expect(page.getByText('Bill:')).toBeVisible();
+    expect(await page.getByRole('img').count()).toBe(1);
 
     const value = faker.helpers.rangeToNumber({ min: 1, max: 999999999 });
 
-    await editPage.preformEditBill(value);
+    await editPage.preformEditBill(1, value);
     await expect(page.getByText('Bills')).toBeVisible();
 
     const element = page.locator('#app > div > div.bills > div:nth-last-child(1)');
