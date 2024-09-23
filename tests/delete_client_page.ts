@@ -1,27 +1,32 @@
 import { expect, type Locator, type Page } from '@playwright/test';
 
-export class DeleteClientPage {
+export class DeleteClientPage 
+{
 
   readonly page: Page;
   readonly expectedInstances: Number;
   readonly optionsButton: Locator;
   readonly deleteButton: Locator;
 
-  constructor(page: Page) {
+  constructor(page: Page) 
+  {
     this.page = page;
     this.optionsButton = page.getByRole('img').first();
     this.deleteButton = page.getByText('Delete');
   }
 
-  get numberOfClients(): Promise<Number> {
+  get numberOfClients(): Promise<Number> 
+  {
     return this.page.getByRole('img').count(); 
   }
 
-  async performDeleteClient() {
-    expect(await this.page.getByRole('img').count()).toBe(2);
+  async clickOptions()
+  {
     await this.optionsButton.click();
-    expect(await this.deleteButton.evaluate(node => node.isConnected)).toBe(true);
+  }
+
+  async performDeleteClient() 
+  {
     await this.deleteButton.click();
-    expect(await this.page.getByRole('img').count()).toBe(1);
   }
 }

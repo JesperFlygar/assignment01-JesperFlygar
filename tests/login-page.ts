@@ -1,12 +1,14 @@
 import { expect, type Locator, type Page } from '@playwright/test';
 
-export class LoginPage {
+export class LoginPage 
+{
     readonly page: Page;
     readonly usernameTextfield: Locator;
     readonly passwordTextfield: Locator;
     readonly loginButton: Locator;
 
-    constructor(page: Page) {
+    constructor(page: Page) 
+    {
         this.page = page;
 
         this.usernameTextfield = page.locator('input[type="text"]');
@@ -14,11 +16,13 @@ export class LoginPage {
         this.loginButton = page.getByRole('button', { name: 'Login' });
     }
 
-    async goto() {
+    async goto() 
+    {
         await this.page.goto(`${process.env.BASE_URL}`);
     }
 
-    async preformLogin(username: string, password: string) {
+    async preformLogin(username: string, password: string) 
+    {
         await this.usernameTextfield.fill(username);
         await this.passwordTextfield.fill(password);
         await this.loginButton.click();
