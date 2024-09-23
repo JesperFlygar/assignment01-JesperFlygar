@@ -134,60 +134,64 @@ test.describe('Delete', () =>
 {
   test('Delete Room', async ({ page }) => 
   {
+    const deleteOption = 1; 
     const viewPage = new ViewRoomPage(page);
-    const deleteRoomPage = new DeleteRoomPage(page, 1);
+    const deleteRoomPage = new DeleteRoomPage(page, deleteOption);
 
     await viewPage.performClickView();
     await expect(page.getByRole('link', { name: 'Create Room' })).toBeVisible();
 
     expect(await deleteRoomPage.numberOfRooms).toBe(2);
     await deleteRoomPage.clickOptions(); 
-    expect(await page.locator('#app > div > div.rooms > div:nth-child(1) > div.action > img').evaluate(node => node.isConnected)).toBe(true); 
-    await deleteRoomPage.performDeleteRoom();
+    expect(await page.locator('#app > div > div.rooms > div:nth-child('+ deleteOption +') > div.action > img').evaluate(node => node.isConnected)).toBe(true); 
+    await deleteRoomPage.performDeleteRoom(); //do the editOption for edit
     expect(await deleteRoomPage.numberOfRooms).toBe(1);
   });
 
   test('Delete Client', async ({ page }) => 
   {
+    const deleteOption = 1; 
     const viewPage = new ViewClientPage(page);
-    const deleteClientPage = new DeleteClientPage(page, 1);
+    const deleteClientPage = new DeleteClientPage(page, deleteOption);
 
     await viewPage.performClickView();
     await expect(page.getByRole('link', { name: 'Create Client' })).toBeVisible();
 
     expect(await deleteClientPage.numberOfClients).toBe(2);
     await deleteClientPage.clickOptions(); 
-    expect(await page.locator('#app > div > div.rooms > div:nth-child(1) > div.action > img').evaluate(node => node.isConnected)).toBe(true); 
+    expect(await page.locator('#app > div > div.rooms > div:nth-child('+ deleteOption +') > div.action > img').evaluate(node => node.isConnected)).toBe(true); 
     await deleteClientPage.performDeleteClient();
     expect(await deleteClientPage.numberOfClients).toBe(1);
   });
 
   test('Delete Bill', async ({ page }) => 
   {
+    const deleteOption = 1; 
     const viewPage = new ViewBillPage(page);
-    const deleteBillPage = new DeleteBillPage(page, 1);
+    const deleteBillPage = new DeleteBillPage(page, deleteOption);
 
     await viewPage.performClickView();
     await expect(page.getByRole('link', { name: 'Create Bill' })).toBeVisible();
 
     expect(await deleteBillPage.numberOfBills).toBe(1);
     await deleteBillPage.clickOptions(); 
-    expect(await page.locator('#app > div > div.rooms > div:nth-child(1) > div.action > img').evaluate(node => node.isConnected)).toBe(true); 
+    expect(await page.locator('#app > div > div.rooms > div:nth-child('+ deleteOption +') > div.action > img').evaluate(node => node.isConnected)).toBe(true); 
     await deleteBillPage.performDeleteBill();
     expect(await deleteBillPage.numberOfBills).toBe(0);
   });
 
   test('Delete Reservation', async ({ page }) => 
   {
+    const deleteOption = 1; 
     const viewPage = new ViewReservationPage(page);
-    const deleteReservationPage = new DeleteReservationPage(page, 1);
+    const deleteReservationPage = new DeleteReservationPage(page, deleteOption);
 
     await viewPage.performClickView();
     await expect(page.getByRole('link', { name: 'Create Reservation' })).toBeVisible();
 
     expect(await deleteReservationPage.numberOfReservations).toBe(1);
     await deleteReservationPage.clickOptions(); 
-    expect(await page.locator('#app > div > div.rooms > div:nth-child(1) > div.action > img').evaluate(node => node.isConnected)).toBe(true); 
+    expect(await page.locator('#app > div > div.rooms > div:nth-child('+ deleteOption +') > div.action > img').evaluate(node => node.isConnected)).toBe(true); 
     await deleteReservationPage.performDeleteReservation();
     expect(await deleteReservationPage.numberOfReservations).toBe(0);
   });

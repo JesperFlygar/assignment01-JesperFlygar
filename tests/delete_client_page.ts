@@ -10,7 +10,7 @@ export class DeleteClientPage
     constructor(page: Page, optionToDelete: Number) 
     {
         this.page = page;
-        this.optionsButton = page.locator('#app > div > div.rooms > div:nth-child(+' + optionToDelete + ') > div.action > img');
+        this.optionsButton = page.locator('#app > div > div.rooms > div:nth-child('+ optionToDelete +') > div.action > img');
         this.deleteButton = page.getByText('Delete');
     }
 
