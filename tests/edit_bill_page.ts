@@ -9,6 +9,22 @@ export class EditBillPage
         this.page = page;
     }
 
+    get numberOfBills(): Promise<Number> 
+    {
+        return this.page.getByRole('img').count();
+    }
+
+    async isChecked(optionToEdit: Number): Promise<Boolean>
+    {
+        let paidText: Locator = this.page.locator('#app > div > div.bills > div:nth-child('+ optionToEdit +') > div.paid');
+        const checked = paidText.innerText();
+        if(checked == new Promise<String>(() => 'Yes'))
+        {
+            return new Promise<Boolean>(() => true);
+        }
+        return new Promise<Boolean>(() => false);
+    }
+
     async preformEditBill(optionToEdit: Number, value: Number) 
     {
         let optionsButton: Locator = this.page.locator('#app > div > div.bills > div:nth-child('+ optionToEdit +') > div.action > img')

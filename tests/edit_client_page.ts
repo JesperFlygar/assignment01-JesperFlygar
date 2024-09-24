@@ -9,6 +9,11 @@ export class EditClientPage
         this.page = page;
     }
 
+    get numberOfClients(): Promise<Number> 
+    {
+        return this.page.getByRole('img').count();
+    }
+
     async preformEditClient(optionToEdit: Number, fullName: string, userEmail: string, userPhoneNo: string) 
     {
         let optionsButton: Locator = this.page.locator('#app > div > div.clients > div:nth-child('+ optionToEdit +') > div.action > img')

@@ -190,7 +190,7 @@ test.describe('Edit', () => {
     await viewPage.performClickView();
     await expect(page.getByRole('link', { name: 'Create Client' })).toBeVisible();
 
-    expect(await page.getByRole('img').count()).toBe(2);
+    const currentNumberOfClients = await editPage.numberOfClients;
 
     const fullName = faker.person.fullName();
     const userEmail = faker.internet.email();
@@ -201,23 +201,30 @@ test.describe('Edit', () => {
     await expect(element).toContainText(fullName);
     await expect(element).toContainText(userEmail);
     await expect(element).toContainText(userPhoneNo);
+
+    expect(await editPage.numberOfClients).toBe(currentNumberOfClients); 
   });
 
   test('Edit Bill', async ({ page }) => 
   {
+    const optionToEdit = 1; 
     const viewPage = new ViewBillPage(page);
     const editPage = new EditBillPage(page);
 
     await viewPage.performClickView();
     await expect(page.getByRole('link', { name: 'Create Bill' })).toBeVisible();
 
-    expect(await page.getByRole('img').count()).toBe(1);
+    const currentNumberOfBills = await editPage.numberOfBills;
 
     const value = faker.helpers.rangeToNumber({ min: 1, max: 999999999 });
 
-    const element = await editPage.preformEditBill(1, value);
+    const isChecked = await editPage.isChecked(optionToEdit); 
+
+    const element = await editPage.preformEditBill(optionToEdit, value);
     await expect(page.getByText('Bills')).toBeVisible();
     await expect(element).toContainText(value.toString());
-    await expect(element).toContainText('Yes');
+    await expect(element).toContainText(isChecked ? 'No' : 'Yes');
+
+    expect(await editPage.numberOfBills).toBe(currentNumberOfBills); 
   });
 })
