@@ -21,5 +21,6 @@ export class EditClientPage
         await this.page.locator('input[type="email"]').fill(userEmail);
         await this.page.locator('div').filter({ hasText: /^Telephone$/ }).getByRole('textbox').fill(userPhoneNo);
         await this.page.getByText('Save').click();
+        return this.page.locator('#app > div > div.clients > div:nth-child(1)');
     }
 }

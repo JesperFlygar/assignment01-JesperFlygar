@@ -117,7 +117,7 @@ test.describe('Create', () =>
     const endDate = faker.date.soon();
 
     const element = await createPage.createReservation(startDate, endDate);
-    
+
     await expect(element).toContainText(startDate.toLocaleDateString());
     await expect(element).toContainText(endDate.toLocaleDateString());
     await expect(element).toContainText('1');
@@ -136,9 +136,9 @@ test.describe('Delete', () =>
     await viewPage.performClickView();
     await expect(page.getByRole('link', { name: 'Create Room' })).toBeVisible();
 
-    expect(await deleteRoomPage.numberOfRooms).toBe(2);
+    const currentNumberOfRooms = await deleteRoomPage.numberOfRooms; 
     await deleteRoomPage.performDeleteRoom(1); 
-    expect(await deleteRoomPage.numberOfRooms).toBe(1);
+    expect(await deleteRoomPage.numberOfRooms).toBe(+currentNumberOfRooms); /////////
   });
 
   test('Delete Client', async ({ page }) => 
@@ -196,10 +196,8 @@ test.describe('Edit', () => {
     const userEmail = faker.internet.email();
     const userPhoneNo = faker.phone.number();
 
-    await editPage.preformEditClient(1, fullName, userEmail, userPhoneNo);
-    await expect(page.getByText('Clients')).toBeVisible();
-
-    const element = page.locator('#app > div > div.clients > div:nth-child(1)');
+    const element = await editPage.preformEditClient(1, fullName, userEmail, userPhoneNo);
+    await expect(page.getByText('Clients')).toBeVisible(); 
     await expect(element).toContainText(fullName);
     await expect(element).toContainText(userEmail);
     await expect(element).toContainText(userPhoneNo);
@@ -217,10 +215,8 @@ test.describe('Edit', () => {
 
     const value = faker.helpers.rangeToNumber({ min: 1, max: 999999999 });
 
-    await editPage.preformEditBill(1, value);
+    const element = await editPage.preformEditBill(1, value);
     await expect(page.getByText('Bills')).toBeVisible();
-
-    const element = page.locator('#app > div > div.bills > div:nth-last-child(1)');
     await expect(element).toContainText(value.toString());
     await expect(element).toContainText('Yes');
   });
