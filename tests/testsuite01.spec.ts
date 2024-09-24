@@ -138,7 +138,7 @@ test.describe('Delete', () =>
 
     const currentNumberOfRooms = await deleteRoomPage.numberOfRooms; 
     await deleteRoomPage.performDeleteRoom(1); 
-    expect(await deleteRoomPage.numberOfRooms).toBe(+currentNumberOfRooms); /////////
+    expect(await deleteRoomPage.numberOfRooms).toBe(+currentNumberOfRooms-1);  
   });
 
   test('Delete Client', async ({ page }) => 
@@ -149,9 +149,9 @@ test.describe('Delete', () =>
     await viewPage.performClickView();
     await expect(page.getByRole('link', { name: 'Create Client' })).toBeVisible();
 
-    expect(await deleteClientPage.numberOfClients).toBe(2); 
+    const currentNumberOfClients = await deleteClientPage.numberOfClients;
     await deleteClientPage.performDeleteClient(1);
-    expect(await deleteClientPage.numberOfClients).toBe(1);
+    expect(await deleteClientPage.numberOfClients).toBe(+currentNumberOfClients-1); 
   });
 
   test('Delete Bill', async ({ page }) => 
@@ -162,9 +162,9 @@ test.describe('Delete', () =>
     await viewPage.performClickView();
     await expect(page.getByRole('link', { name: 'Create Bill' })).toBeVisible();
 
-    expect(await deleteBillPage.numberOfBills).toBe(1); 
+    const currentNumberOfBills = await deleteBillPage.numberOfBills;
     await deleteBillPage.performDeleteBill(1);
-    expect(await deleteBillPage.numberOfBills).toBe(0);
+    expect(await deleteBillPage.numberOfBills).toBe(+currentNumberOfBills-1); 
   });
 
   test('Delete Reservation', async ({ page }) => 
@@ -175,9 +175,9 @@ test.describe('Delete', () =>
     await viewPage.performClickView();
     await expect(page.getByRole('link', { name: 'Create Reservation' })).toBeVisible();
 
-    expect(await deleteReservationPage.numberOfReservations).toBe(1);
+    const currentNumberOfReservations = await deleteReservationPage.numberOfReservations;
     await deleteReservationPage.performDeleteReservation(1);
-    expect(await deleteReservationPage.numberOfReservations).toBe(0);
+    expect(await deleteReservationPage.numberOfReservations).toBe(+currentNumberOfReservations-1); 
   });
 })
 
