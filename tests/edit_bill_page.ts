@@ -18,27 +18,12 @@ export class EditBillPage
     async isChecked(optionToEdit: Number): Promise<Boolean>
     {
         let paidText: Locator = this.page.locator('#app > div > div.bills > div:nth-child('+ optionToEdit +') > div.paid');
-        console.log('this1:::::' + paidText); 
         const checked = paidText.innerText();
-        console.log('this2:::::' + checked);
-
-
-        //this.variableIsChecked = false;
-        //await checked.then(val => //then wait for value of promise object checked
-        //{
         if(await checked == 'Paid: Yes')
         {
-            console.log('hi');
             return true; 
-            //this.variableIsChecked = true;
-            // return new Promise<Boolean>(() => true);
         }
-        // console.log('hi2'); 
-        // })
-        console.log('hi33'); 
         return false; 
-        // console.log('hi44' + val);  
-        // return val; 
     }
 
     async preformEditBill(optionToEdit: Number, value: Number) 

@@ -218,19 +218,13 @@ test.describe('Edit', () => {
 
     const value = faker.helpers.rangeToNumber({ min: 1, max: 999999999 });
 
-    console.log('hello1');
     const checked = await editPage.isChecked(optionToEdit); 
-    console.log('hello' + checked);
 
     const element = await editPage.preformEditBill(optionToEdit, value);
-    console.log('hello3');
     await expect(page.getByText('Bills')).toBeVisible();
     await expect(element).toContainText(value.toString());
-    console.log('hello4');
     await expect(element).toContainText(checked ? 'Paid: No' : 'Paid: Yes');
-    console.log('hello5');
 
     expect(await editPage.numberOfBills).toBe(currentNumberOfBills); 
-    console.log('hello6');
   });
 })
